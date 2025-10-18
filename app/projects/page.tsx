@@ -60,13 +60,15 @@ export default function ProjectsPage() {
               <p className="text-xl text-white/80 mb-6">
                 Inspiration for getting started in nittor
               </p>
-              <button className="flex items-center gap-2 px-6 py-3 bg-gray-800/50 hover:bg-gray-700/50 rounded-full backdrop-blur-sm transition-colors">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <line x1="12" y1="5" x2="12" y2="19" strokeWidth="2"/>
-                  <line x1="5" y1="12" x2="19" y2="12" strokeWidth="2"/>
-                </svg>
-                Add Starter Projects
-              </button>
+              <Link href="/generate">
+                <button className="flex items-center gap-2 px-6 py-3 bg-gray-800/50 hover:bg-gray-700/50 rounded-full backdrop-blur-sm transition-colors">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <line x1="12" y1="5" x2="12" y2="19" strokeWidth="2"/>
+                    <line x1="5" y1="12" x2="19" y2="12" strokeWidth="2"/>
+                  </svg>
+                  Add Starter Projects
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -74,7 +76,7 @@ export default function ProjectsPage() {
         {/* Projects grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Video project card */}
-          <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden relative group cursor-pointer">
+          <Link href="/generate" className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden relative group cursor-pointer">
             <video 
               autoPlay 
               loop 
@@ -97,10 +99,10 @@ export default function ProjectsPage() {
                 <span className="text-sm">Create project</span>
               </div>
             </div>
-          </div>
+          </Link>
           
           {/* Create new project card with video background */}
-          <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden relative group cursor-pointer">
+          <Link href="/generate" className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden relative group cursor-pointer">
             {/* Video background */}
             <video 
               autoPlay 
@@ -124,12 +126,12 @@ export default function ProjectsPage() {
                 <span className="text-sm">Create project</span>
               </div>
             </div>
-          </div>
+          </Link>
           
           {/* Combined card with building and new video stacked */}
           <div className="flex flex-col gap-6">
             {/* Building video */}
-            <div className="bg-gray-900 rounded-xl h-64 border border-gray-800 overflow-hidden relative group cursor-pointer">
+            <Link href="/generate" className="bg-gray-900 rounded-xl h-64 border border-gray-800 overflow-hidden relative group cursor-pointer">
               <video 
                 autoPlay 
                 loop 
@@ -156,10 +158,10 @@ export default function ProjectsPage() {
                   <span className="text-sm">Create project</span>
                 </div>
               </div>
-            </div>
+            </Link>
             
             {/* New video */}
-            <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden relative group cursor-pointer">
+            <Link href="/generate" className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden relative group cursor-pointer">
               <video 
                 autoPlay 
                 loop 
@@ -182,7 +184,7 @@ export default function ProjectsPage() {
                   <span className="text-sm">Create project</span>
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
 

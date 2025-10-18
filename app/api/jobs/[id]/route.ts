@@ -5,10 +5,10 @@ const jobProgress = new Map<string, { progress: number; status: string }>();
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const jobId = params.id;
+    const { id: jobId } = await params;
 
     // Initialize job if not exists
     if (!jobProgress.has(jobId)) {

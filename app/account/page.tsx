@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { User, Mail, CreditCard, LogOut, ArrowLeft } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function AccountPage() {
   const [name, setName] = useState("John Doe");
@@ -16,12 +17,12 @@ export default function AccountPage() {
       <header className="border-b border-zinc-800 px-6 py-4">
         <div className="flex items-center justify-between max-w-4xl mx-auto">
           <div className="flex items-center gap-4">
-            <a href="/generate" className="text-zinc-400 hover:text-white">
+            <Link href="/generate" className="text-zinc-400 hover:text-white">
               <ArrowLeft className="h-5 w-5" />
-            </a>
-            <a href="/" className="text-xl font-bold text-[#B4E031]">
+            </Link>
+            <Link href="/" className="text-xl font-bold text-[#B4E031]">
               nittor
-            </a>
+            </Link>
           </div>
           <Button
             variant="outline"

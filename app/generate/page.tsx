@@ -10,6 +10,7 @@ import { TimelineEditor } from "@/components/editor/TimelineEditor";
 import { SceneList } from "@/components/editor/SceneList";
 import { Button } from "@/components/ui/button";
 import { User } from "lucide-react";
+import Link from "next/link";
 
 export default function GeneratePage() {
   const [mode, setMode] = useState<"description" | "images">("description");
@@ -20,11 +21,11 @@ export default function GeneratePage() {
       {/* Header */}
       <header className="flex items-center justify-between border-b border-zinc-800 px-6 py-4">
         <div className="flex items-center gap-4">
-          <a href="/" className="text-xl font-bold text-[#B4E031]">
+          <Link href="/" className="text-xl font-bold text-[#B4E031]">
             nittor
-          </a>
+          </Link>
           <div className="h-6 w-px bg-zinc-700" />
-          <Tabs value={currentTab} onValueChange={(v) => setCurrentTab(v as any)}>
+          <Tabs value={currentTab} onValueChange={(v) => setCurrentTab(v as "scenario" | "video")}>
             <TabsList className="bg-zinc-900">
               <TabsTrigger value="scenario">Scenario</TabsTrigger>
               <TabsTrigger value="video">Video</TabsTrigger>

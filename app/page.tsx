@@ -1,57 +1,62 @@
+"use client";
+
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 export default function Home() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.play().catch((error) => {
+        console.error("Video autoplay failed:", error);
+      });
+    }
+  }, []);
+
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
-      {/* Background blur effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#B4E031]/10 via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-[#B4E031]/5 via-transparent to-transparent" />
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Video background */}
+      <video 
+        ref={videoRef}
+        autoPlay 
+        loop 
+        muted 
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+        onLoadedData={() => console.log("Video loaded successfully")}
+        onError={(e) => console.error("Video error:", e)}
+      >
+        <source src="https://d3u0tzju9qaucj.cloudfront.net/bc7c962c-df80-4e8f-a0bb-a60a92385e32/4ba6d9af-cf5a-4bfa-98f5-dc3b405682bb.mp4" type="video/mp4" />
+      </video>
       
-      <main className="relative z-10 flex flex-col items-center gap-8 px-4 text-center">
-        {/* Logo/Title */}
-        <div className="flex flex-col items-center gap-4">
-          <div className="flex items-center gap-3">
-            <Sparkles className="h-12 w-12 text-[#B4E031]" />
-            <h1 className="mt-4 text-5xl font-bold tracking-tight sm:text-6xl">
-              nittor
-            </h1>
-          </div>
-          <p className="text-xl text-zinc-400 max-w-2xl">
-            Create videos with AI. Generate scenarios, frames and edit everything in one place.
-          </p>
-        </div>
+      {/* Fallback gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black" style={{zIndex: -1}}></div>
+
+      {/* Overlay to make text more readable */}
+      <div className="absolute inset-0 bg-black/40"></div>
+
+      {/* Main content */}
+      <div className="relative z-10 text-center px-4">
+        {/* Large "nittor" text with Flow-style font */}
+        <h1 className="text-white text-[120px] md:text-[180px] lg:text-[220px] font-light tracking-tight leading-none mb-8 select-none">
+          nittor
+        </h1>
+
+        {/* Tagline */}
+        <p className="text-white/90 text-xl md:text-2xl font-light max-w-2xl mx-auto mb-12 leading-relaxed">
+          Where the next wave of storytelling happens
+        </p>
 
         {/* CTA Button */}
-        <Link href="/generate">
-          <Button 
-            size="lg" 
-            className="mt-8 bg-[#B4E031] hover:bg-[#A0D020] text-black font-semibold px-8 py-6 text-lg rounded-full transition-all hover:scale-105"
-          >
-            Create Video
-          </Button>
+        <Link 
+          href="/projects"
+          className="inline-block bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-full font-medium text-base transition-all backdrop-blur-sm border border-white/20"
+        >
+          Create with nittor
         </Link>
-
-        {/* Feature hints */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl">
-          <div className="flex flex-col items-center gap-2 text-zinc-400">
-            <div className="text-4xl">🎬</div>
-            <h3 className="font-semibold text-white">Scenario Generation</h3>
-            <p className="text-sm">AI creates a script based on your topic</p>
-          </div>
-          <div className="flex flex-col items-center gap-2 text-zinc-400">
-            <div className="text-4xl">🎨</div>
-            <h3 className="font-semibold text-white">Frame Creation</h3>
-            <p className="text-sm">Generate video from description or images</p>
-          </div>
-          <div className="flex flex-col items-center gap-2 text-zinc-400">
-            <div className="text-4xl">✂️</div>
-            <h3 className="font-semibold text-white">Editing</h3>
-            <p className="text-sm">Edit, cut, add audio</p>
-          </div>
-        </div>
-      </main>
+      </div>
     </div>
   );
 }
