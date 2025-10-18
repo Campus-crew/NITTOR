@@ -26,7 +26,7 @@ export default function Home() {
         playsInline
         className="absolute inset-0 w-full h-full object-cover"
         onLoadedData={() => console.log("Video loaded successfully")}
-        onError={(e) => console.error("Video error:", e)}
+        onError={(e) => console.error("Video error:", e.currentTarget.error)}
       >
         <source src="/f1.mp4" type="video/mp4" />
       </video>
