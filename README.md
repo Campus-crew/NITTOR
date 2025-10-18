@@ -1,36 +1,149 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Flow - AI Video Generator 🎬
 
-## Getting Started
+Веб-приложение для создания видео с помощью ИИ. Генерируйте сценарии, создавайте кадры и монтируйте всё в одном месте.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-15-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8)
+![License](https://img.shields.io/badge/license-MIT-green)
+
+## ✨ Возможности
+
+- 🎯 **Генерация сценария** - ИИ создаёт структуру видео по вашей теме
+- 🎨 **Два режима генерации**:
+  - Видео по описанию (текстовый промпт)
+  - Видео по картинкам (загрузка изображений)
+- 💬 **Чат-интерфейс** с сохранением контекста между кадрами
+- 🎬 **Таймлайн-редактор** с операциями монтажа
+- 📊 **Список сцен** с отслеживанием статуса
+- ⌨️ **Горячие клавиши** для быстрой работы
+- 💾 **Автосохранение** прогресса в браузере
+
+## 🚀 Быстрый старт
+
+### Установка
 
 ```bash
+# Клонировать репозиторий
+git clone <your-repo-url>
+cd ai-video
+
+# Установить зависимости
+npm install
+
+# Запустить dev-сервер
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Откройте [http://localhost:3000](http://localhost:3000) в браузере.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Использование
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Главная страница** → Нажмите "Создать видео"
+2. **Сценарий** → Опишите тему вашего видео
+3. **Видео** → Выберите режим и генерируйте кадры
+4. **Монтаж** → Используйте таймлайн для редактирования
+5. **Экспорт** → Скачайте готовое видео
 
-## Learn More
+Подробнее см. [QUICK_START.md](./QUICK_START.md)
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠 Технологии
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript (strict mode)
+- **Styling**: Tailwind CSS v4
+- **UI Components**: shadcn/ui
+- **State Management**: Zustand
+- **Data Fetching**: React Query
+- **Validation**: Zod
+- **Icons**: Lucide React
+- **Notifications**: Sonner
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📁 Структура проекта
 
-## Deploy on Vercel
+```
+ai-video/
+├── app/
+│   ├── api/              # Mock API routes
+│   ├── generate/         # Editor page
+│   └── page.tsx          # Landing page
+├── components/
+│   ├── editor/           # Editor components
+│   └── ui/               # shadcn/ui components
+├── lib/
+│   ├── api.ts            # API hooks
+│   ├── store.ts          # Zustand store
+│   └── providers.tsx     # React Query provider
+└── public/               # Static assets
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔌 Интеграция с бэкендом
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Сейчас используются mock API. Для подключения реального бэкенда:
+
+1. Создайте `.env.local`:
+```env
+NEXT_PUBLIC_API_URL=https://your-backend.com
+API_SECRET_KEY=your-secret-key
+```
+
+2. Обновите endpoints в `lib/api.ts`
+
+3. Настройте CORS на бэкенде
+
+Подробнее см. [PROJECT_OVERVIEW.md](./PROJECT_OVERVIEW.md)
+
+## 📝 Скрипты
+
+```bash
+npm run dev          # Запуск dev-сервера
+npm run build        # Сборка для продакшена
+npm start            # Запуск продакшен-сервера
+npm run lint         # Проверка кода
+```
+
+## ⌨️ Горячие клавиши
+
+- `Пробел` / `K` - Воспроизведение/Пауза
+- `Enter` - Отправить сообщение в чате
+- `Shift + Enter` - Новая строка в чате
+
+## 📚 Документация
+
+- [PROJECT_OVERVIEW.md](./PROJECT_OVERVIEW.md) - Обзор проекта и архитектура
+- [QUICK_START.md](./QUICK_START.md) - Руководство пользователя
+- [SUMMARY.md](./SUMMARY.md) - Резюме реализованного функционала
+
+## 🎨 Дизайн
+
+- **Тема**: Тёмная по умолчанию
+- **Акценты**: Жёлтый (#F5D90A, #E6B400)
+- **Вдохновение**: Higgsfield, Google Veo
+
+## 📋 TODO
+
+- [ ] Интеграция с реальным бэкендом
+- [ ] Реальный видео-плеер
+- [ ] Экспорт готового видео
+- [ ] Аутентификация
+- [ ] Сохранение проектов
+- [ ] Тесты (Vitest + Playwright)
+
+## 🤝 Вклад
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 Лицензия
+
+MIT License - см. [LICENSE](./LICENSE)
+
+## 🙏 Благодарности
+
+- [Next.js](https://nextjs.org/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Vercel](https://vercel.com/)
+
+---
+
+Создано с ❤️ для генерации видео с помощью ИИ
