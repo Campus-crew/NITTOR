@@ -1,0 +1,93 @@
+// Prisma schema for NITTOR video generation platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  projects  Project[]
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  scenarios   Scenario[]
+  
+  @@index([userId])
+}
+
+model Scenario {
+  id            String   @id @default(cuid())
+  topic         String
+  totalDuration Int      // in seconds
+  projectId     String
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  scenes        Scene[]
+  
+  @@index([projectId])
+}
+
+model Scene {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  durationSec Int
+  status      String   @default("pending") // pending, generating, complete, error
+  videoUrl    String?
+  scenarioId  String
+  scenario    Scenario @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
+  order       Int      // scene order in scenario
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  results     GeneratedResult[]
+  
+  @@index([scenarioId])
+}
+
+model GeneratedResult {
+  id        String   @id @default(cuid())
+  sceneId   String
+  scene     Scene    @relation(fields: [sceneId], references: [id], onDelete: Cascade)
+  jobId     String   @unique
+  mode      String   // text or images
+  prompt    String?
+  assetUrl  String?
+  status    String   @default("queued") // queued, running, succeeded, failed
+  progress  Int      @default(0)
+  error     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([sceneId])
+  @@index([jobId])
+}
+
+model UploadedImage {
+  id        String   @id @default(cuid())
+  filename  String
+  url       String
+  size      Int
+  mimeType  String
+  userId    String
+  createdAt DateTime @default(now())
+  
+  @@index([userId])
+}

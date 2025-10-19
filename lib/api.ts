@@ -61,10 +61,28 @@ async function generateScenario(data: ScenarioRequest): Promise<ScenarioResponse
 }
 
 async function generateScene(data: SceneGenerationRequest): Promise<SceneGenerationResponse> {
+  const formData = new FormData();
+  
+  formData.append("sceneId", data.sceneId);
+  formData.append("mode", data.mode);
+  
+  if (data.prompt) {
+    formData.append("prompt", data.prompt);
+  }
+  
+  if (data.traits) {
+    formData.append("traits", JSON.stringify(data.traits));
+  }
+  
+  if (data.images && data.images.length > 0) {
+    data.images.forEach((image) => {
+      formData.append("images", image);
+    });
+  }
+
   const response = await fetch("/api/scene/generate", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    body: formData,
   });
 
   if (!response.ok) {
@@ -125,6 +143,91 @@ export function useJobStatus(jobId: string | null, enabled: boolean = true) {
       
       // Poll every 2 seconds while running
       return 2000;
+    },
+  });
+}
+
+// Project management API functions
+export interface Project {
+  id: string;
+  name: string;
+  description?: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateProjectRequest {
+  name: string;
+  description?: string;
+  userId: string;
+}
+
+async function getProjects(userId: string): Promise<{ success: boolean; projects: Project[] }> {
+  const response = await fetch(`/api/projects?userId=${userId}`);
+  
+  if (!response.ok) {
+    throw new Error("Failed to fetch projects");
+  }
+  
+  return response.json();
+}
+
+async function createProject(data: CreateProjectRequest): Promise<{ success: boolean; project: Project }> {
+  const response = await fetch("/api/projects", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  
+  if (!response.ok) {
+    throw new Error("Failed to create project");
+  }
+  
+  return response.json();
+}
+
+async function deleteProject(projectId: string): Promise<{ success: boolean }> {
+  const response = await fetch(`/api/projects/${projectId}`, {
+    method: "DELETE",
+  });
+  
+  if (!response.ok) {
+    throw new Error("Failed to delete project");
+  }
+  
+  return response.json();
+}
+
+// Project hooks
+export function useProjects(userId: string | null) {
+  return useQuery({
+    queryKey: ["projects", userId],
+    queryFn: () => getProjects(userId!),
+    enabled: !!userId,
+  });
+}
+
+export function useCreateProject() {
+  return useMutation({
+    mutationFn: createProject,
+    onSuccess: () => {
+      toast.success("Проект создан!");
+    },
+    onError: (error: Error) => {
+      toast.error(`Ошибка: ${error.message}`);
+    },
+  });
+}
+
+export function useDeleteProject() {
+  return useMutation({
+    mutationFn: deleteProject,
+    onSuccess: () => {
+      toast.success("Проект удален");
+    },
+    onError: (error: Error) => {
+      toast.error(`Ошибка: ${error.message}`);
     },
   });
 }

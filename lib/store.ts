@@ -6,6 +6,7 @@ export interface Scene {
   title: string;
   description: string;
   durationSec: number;
+  prompt?: string; // AI-generated prompt for video generation
   videoUrl?: string;
   status: "pending" | "generating" | "complete" | "error";
 }

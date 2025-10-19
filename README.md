@@ -77,21 +77,25 @@ ai-video/
 └── public/               # Static assets
 ```
 
-## 🔌 Интеграция с бэкендом
+## 🔌 Интеграция с AI API
 
-Сейчас используются mock API. Для подключения реального бэкенда:
+Приложение интегрировано с:
+- **OpenAI** - для генерации сценариев
+- **Higgsfield** - для генерации видео
 
-1. Создайте `.env.local`:
+Создайте `.env.local`:
 ```env
-NEXT_PUBLIC_API_URL=https://your-backend.com
-API_SECRET_KEY=your-secret-key
+# OpenAI для умных сценариев
+OPENAI_API_KEY=sk-ваш-ключ
+
+# Higgsfield для генерации видео
+HIGGSFIELD_API_KEY=ваш-ключ
+HIGGSFIELD_API_URL=https://api.higgsfield.ai/v1
 ```
 
-2. Обновите endpoints в `lib/api.ts`
+**Без API ключей** приложение работает в fallback режиме с демо данными.
 
-3. Настройте CORS на бэкенде
-
-Подробнее см. [PROJECT_OVERVIEW.md](./PROJECT_OVERVIEW.md)
+Подробнее см. [API_SETUP.md](./API_SETUP.md)
 
 ## 📝 Скрипты
 
@@ -110,9 +114,11 @@ npm run lint         # Проверка кода
 
 ## 📚 Документация
 
-- [PROJECT_OVERVIEW.md](./PROJECT_OVERVIEW.md) - Обзор проекта и архитектура
-- [QUICK_START.md](./QUICK_START.md) - Руководство пользователя
-- [SUMMARY.md](./SUMMARY.md) - Резюме реализованного функционала
+- **[START_HERE.md](./START_HERE.md)** - 👈 Начните отсюда!
+- **[API_SETUP.md](./API_SETUP.md)** - Настройка OpenAI и Higgsfield
+- [SETUP.md](./SETUP.md) - Детальная установка
+- [VERIFICATION.md](./VERIFICATION.md) - Проверка функций
+- [NO_DB_MODE.md](./NO_DB_MODE.md) - Работа без БД
 
 ## 🎨 Дизайн
 
@@ -122,11 +128,13 @@ npm run lint         # Проверка кода
 
 ## 📋 TODO
 
-- [ ] Интеграция с реальным бэкендом
-- [ ] Реальный видео-плеер
+- [x] Интеграция с OpenAI для сценариев
+- [x] Интеграция с Higgsfield для видео
+- [x] Загрузка изображений (FormData)
+- [x] Отслеживание прогресса генерации
+- [ ] Настройка PostgreSQL для персистентности
+- [ ] Аутентификация пользователей
 - [ ] Экспорт готового видео
-- [ ] Аутентификация
-- [ ] Сохранение проектов
 - [ ] Тесты (Vitest + Playwright)
 
 ## 🤝 Вклад

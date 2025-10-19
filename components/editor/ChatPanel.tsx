@@ -80,10 +80,19 @@ export function ChatPanel({ currentTab, mode }: ChatPanelProps) {
     } else {
       // Generate scene
       try {
+        // Get current scene to use its AI-generated prompt if available
+        const currentScene = scenes.find(s => s.id === currentSceneId);
+        const scenePrompt = currentScene?.prompt;
+        
+        // Combine user input with AI-generated prompt
+        const finalPrompt = userInput 
+          ? `${userInput}${scenePrompt ? `. Scene context: ${scenePrompt}` : ''}`
+          : scenePrompt || "Generate a video";
+        
         const result = await generateSceneMutation.mutateAsync({
           sceneId: currentSceneId || "scene-1",
           mode: mode === "description" ? "text" : "images",
-          prompt: userInput,
+          prompt: finalPrompt,
           images: uploadedImages,
           traits: keepTraits ? traits : undefined,
         });
