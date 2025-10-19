@@ -1,8 +1,8 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": ".next",
-  "devCommand": "npm run dev",
-  "installCommand": "npm install",
+  "buildCommand": "cd nittor && npm run build",
+  "outputDirectory": "nittor/.next",
+  "devCommand": "cd nittor && npm run dev",
+  "installCommand": "cd nittor && npm install",
   "framework": "nextjs",
   "regions": ["arn1"]
 }
