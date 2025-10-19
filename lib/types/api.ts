@@ -304,11 +304,11 @@ export interface ImageToVideoRequest {
   input_images: Array<{
     type: string;
     image_url?: string;
-    [key: string]: any;
+    [key: string]: unknown;
   }>;
   model?: string;
   seed?: number | null;
-  motions?: Array<Record<string, any>> | null;
+  motions?: Array<Record<string, unknown>> | null;
   enhance_prompt?: boolean;
   webhook_url?: string | null;
   webhook_secret?: string | null;
@@ -318,7 +318,7 @@ export interface GenerationResponse {
   job_id: string;
   status: string;
   message: string;
-  data?: Record<string, any> | null;
+  data?: Record<string, unknown> | null;
 }
 
 export interface JobStatusResponse {
@@ -329,8 +329,8 @@ export interface JobStatusResponse {
   updated_at?: string | null;
   completed_at?: string | null;
   progress?: number | null;
-  input_params: Record<string, any>;
-  result?: Record<string, any> | null;
+  input_params: Record<string, unknown>;
+  result?: Record<string, unknown> | null;
   error?: string | null;
 }
 
@@ -339,7 +339,7 @@ export interface ContextualGenerationRequest {
   project_id: number;
   use_project_context?: boolean;
   scenario_step_id?: number | null;
-  generation_settings?: Record<string, any> | null;
+  generation_settings?: Record<string, unknown> | null;
 }
 
 export interface GenerationContext {
@@ -362,7 +362,7 @@ export interface ValidationError {
 export interface ApiError {
   detail?: string | ValidationError[];
   message?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface PaginatedResponse<T> {
@@ -372,9 +372,7 @@ export interface PaginatedResponse<T> {
   limit: number;
 }
 
-// ==================== Request/Response Helpers ====================
-
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   data?: T;
   error?: string | ApiError;
   status: number;

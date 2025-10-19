@@ -138,7 +138,7 @@ class ApiClient {
 
   async patch<T>(
     endpoint: string,
-    body?: any,
+    body?: unknown,
     options?: RequestInit
   ): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, {
@@ -173,9 +173,8 @@ export async function unwrapApiResponse<T>(
       if (typeof response.error.detail === 'string') {
         errorMessage = response.error.detail;
       } else if (Array.isArray(response.error.detail)) {
-        // Validation errors array
         errorMessage = response.error.detail
-          .map((err: any) => err.msg || err.message || JSON.stringify(err))
+          .map((err: { msg?: string; message?: string }) => err.msg || err.message || JSON.stringify(err))
           .join(', ');
       } else if (response.error.message) {
         errorMessage = response.error.message;

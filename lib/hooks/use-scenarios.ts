@@ -1,8 +1,3 @@
-/**
- * Scenarios Hooks
- * React Query hooks for scenarios and scenario steps operations
- */
-
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { scenariosApi } from "@/lib/api";
@@ -13,11 +8,6 @@ import type {
   ScenarioStepUpdate,
 } from "@/lib/types/api";
 
-// ==================== Scenarios ====================
-
-/**
- * Generate scenario using Azure OpenAI
- */
 export function useGenerateScenario() {
   const queryClient = useQueryClient();
 
@@ -41,34 +31,30 @@ export function useGenerateScenario() {
   });
 }
 
-/**
- * Get scenario for a project
- */
 export function useProjectScenario(projectId: number | null) {
   return useQuery({
     queryKey: ["projects", projectId, "scenario"],
     queryFn: async () => {
       try {
         return await scenariosApi.getProjectScenario(projectId!);
-      } catch (error: any) {
-        // If scenario doesn't exist (404), return null instead of throwing
+      } catch (error) {
+        const err = error as Error & { message?: string };
         if (
-          error.message?.includes("404") || 
-          error.message?.includes("[404]") ||
-          error.message?.includes("not found") ||
-          error.message?.includes("Not found")
+          err.message?.includes("404") || 
+          err.message?.includes("[404]") ||
+          err.message?.includes("not found") ||
+          err.message?.includes("Not found")
         ) {
           return null;
         }
-        // Log other errors in development
-        if (process.env.NODE_ENV === 'development') {
-          console.warn("Scenario fetch error:", error.message);
+        if (process.env.NODE_ENV === "development") {
+          console.warn("Scenario fetch error:", err.message);
         }
         throw error;
       }
     },
     enabled: !!projectId,
-    retry: false, // Don't retry if scenario doesn't exist
+    retry: false,
   });
 }
 
